@@ -1,52 +1,56 @@
 ---
-import { Picture } from "astro:assets";
-import heroImage from "@/assets/hero.png";
 import Link from "@/components/ui/link.astro";
 import { Icon } from "astro-icon/components";
+import { getLangFromUrl, useTranslations } from "@/utils/i18n";
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
 ---
 
 <main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
+  class="grid lg:grid-cols-2 place-items-center min-h-[80vh] pt-16 pb-8 md:pt-12 md:pb-24"
+>
   <div class="py-6 md:order-1 hidden md:block">
-    <Picture
-      src={heroImage}
-      alt="Astronaut in the air"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 800px) 100vw, 620px"
-      loading="eager"
-      format="avif"
+    <img
+      src="/avatar.jpg"
+      alt="Portrait of Hovirix"
+      class="w-full max-w-md rounded-2xl shadow-xl transition-shadow duration-300 hover:shadow-2xl"
+      loading="lazy"
+      decoding="async"
     />
   </div>
+
   <div>
     <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-      Marketing website done with Astro
+      class="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight"
+    >
+      {t("hero.greeting")}
     </h1>
-    <p class="text-lg mt-4 text-slate-600 max-w-xl">
-      Astroship is a starter template for startups, marketing websites & landing
-      pages.<wbr /> Built with Astro.build and TailwindCSS. You can quickly create
-      any website with this starter.
-    </p>
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      <Link
-        href="#"
-        href="https://web3templates.com/templates/astroship-starter-website-template-for-astro"
-        target="_blank"
-        class="flex gap-1 items-center justify-center"
-        rel="noopener">
-        <Icon class="text-white w-5 h-5" name="bx:bxs-cloud-download" />
 
-        Download for Free
-      </Link>
+    <p class="mt-4 max-w-xl text-lg text-slate-600">
+      {t("hero.description")}
+    </p>
+
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row">
       <Link
+        href={`${langPrefix}/blog`}
+        class="flex items-center justify-center gap-2"
+      >
+        <Icon class="h-5 w-5 text-white" name="bx:bxs-book-open" />
+        <span>{t("hero.cta.blog")}</span>
+      </Link>
+
+      <Link
+        href="https://github.com/Hovirix"
+        target="_blank"
+        rel="noopener noreferrer"
         size="lg"
         style="outline"
-        rel="noopener"
-        href="https://github.com/surjithctly/astroship"
-        class="flex gap-1 items-center justify-center"
-        target="_blank">
-        <Icon class="text-black w-4 h-4" name="bx:bxl-github" />
-        GitHub Repo
+        class="flex items-center justify-center gap-2"
+      >
+        <Icon class="h-4 w-4 text-black" name="bx:bxl-github" />
+        <span>{t("hero.cta.work")}</span>
       </Link>
     </div>
   </div>
