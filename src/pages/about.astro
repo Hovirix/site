@@ -1,57 +1,168 @@
 ---
-import { getCollection } from "astro:content";
-import { Picture } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
-
-// Filter team entries with 'draft: false' & date before current date
-const publishedTeamMembers = await getCollection("team", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
-});
 ---
 
 <Layout title="About">
   <Container>
     <Sectionhead>
-      <Fragment slot="title">About</Fragment>
-      <Fragment slot="desc">We are a small passionate team.</Fragment>
+      <Fragment slot="title">About Me</Fragment>
+      <Fragment slot="desc">
+        Homelabber and Linux user.
+      </Fragment>
     </Sectionhead>
 
-    <div class="flex flex-col gap-3 mx-auto max-w-4xl mt-16">
-      <h2 class="font-bold text-3xl text-gray-800">
-        Empowering the world with Astro.
-      </h2>
-      <p class="text-lg leading-relaxed text-slate-500">
-        We're a multi-cultural team from around the world! We come from diverse
-        backgrounds, bringing different personalities, experiences and skills to
-        the job. This is what makes our team so special.
-      </p>
-    </div>
-    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-4xl mt-12">
-      {
-        publishedTeamMembers.map((teamMemberEntry) => (
-          <div class="group">
-            <div class="w-full aspect-square">
-              <Picture
-                src={teamMemberEntry.data.avatar.src}
-                alt={teamMemberEntry.data.avatar.alt}
-                sizes="(max-width: 800px) 100vw, 400px"
-                width={400}
-                height={400}
-                class="w-full rounded-sm transition group-hover:-translate-y-1 group-hover:shadow-xl bg-white object-cover object-center aspect-square"
-              />
-            </div>
+    <div class="mx-auto mt-16 flex max-w-5xl flex-col gap-12">
+      <!-- Short intro -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-3xl font-bold text-gray-800">
+          Enjoying homelabbing, DevOps, and cybersecurity.
+        </h2>
 
-            <div class="mt-4 text-center">
-              <h2 class="text-lg text-gray-800">{teamMemberEntry.data.name}</h2>
-              <h3 class="text-sm text-slate-500">
-                {teamMemberEntry.data.title}
-              </h3>
+        <p class="text-lg leading-relaxed text-slate-600">
+          I maintain a homelab on a daily basis for a small number of users,
+          running self-hosted services such as Immich, Paperless-ngx, and
+          Vaultwarden. I’m a self-driven learner who enjoys getting hands-on with
+          new topics related to Linux, DevOps, and cybersecurity.
+        </p>
+
+        <p class="text-lg leading-relaxed text-slate-600">
+          Driven by passion, I’m currently finalizing my homelab setup and
+          starting to dive deeper into cybersecurity. I also enjoy helping
+          others and sharing resources, mainly through writing blog posts to
+          give back the knowledge the community has shared with me.
+        </p>
+      </div>
+
+      <!-- Tech Stack Grid -->
+      <div class="flex flex-col gap-6">
+        <div class="text-center">
+          <h3 class="text-3xl font-bold text-gray-800">
+            Tech Stack & Tools
+          </h3>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Infrastructure -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                <span class="text-2xl">🏗️</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Infrastructure
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">NixOS</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Fedora CoreOS</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Ansible</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Terraform</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Nix</span>
             </div>
           </div>
-        ))
-      }
+
+          <!-- Containers -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100">
+                <span class="text-2xl">📦</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Containers & CI/CD
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Docker</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Podman</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">CI/CD</span>
+            </div>
+          </div>
+
+          <!-- Networking -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
+                <span class="text-2xl">🌐</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Networking
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">OpenWrt</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Cloudflare</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Tailscale</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">AdGuard Home</span>
+            </div>
+          </div>
+
+          <!-- Security & Observability -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
+                <span class="text-2xl">🔒</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Security & Monitoring
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Authentik</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Authelia</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Security Onion</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Prometheus</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Grafana</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Loki</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Card -->
+      <div class="mb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 p-8 md:p-12">
+        <div class="flex flex-col items-center gap-8 md:flex-row">
+          <div class="flex-shrink-0">
+            <img
+              src="/avatar.jpg"
+              alt="Hovirix"
+              class="h-32 w-32 rounded-full object-cover object-center shadow-lg ring-4 ring-white md:h-40 md:w-40"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="flex flex-1 flex-col gap-4 text-center md:text-left">
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800">
+                Let’s connect
+              </h3>
+              <p class="mt-2 text-slate-600">
+                Interested in infrastructure, security, or homelab discussions?
+                If you have a topic, idea, or tool you’d like to share, feel free
+                to reach out.
+              </p>
+            </div>
+
+            <div class="flex justify-center gap-4 md:justify-start">
+              <a
+                href="https://github.com/Hovirix"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-lg bg-black px-6 py-3 text-white transition hover:bg-slate-900"
+              >
+                View GitHub
+              </a>
+              <a
+                href="/contact"
+                class="inline-flex items-center gap-2 rounded-lg border-2 border-slate-300 px-6 py-3 text-gray-800 transition hover:border-slate-400 hover:bg-white"
+              >
+                Get in touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </Container>
 </Layout>
