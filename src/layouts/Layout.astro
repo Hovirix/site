@@ -8,6 +8,7 @@ import "../styles/global.css";
 
 export interface Props {
   title: string;
+  lang?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
@@ -17,15 +18,15 @@ const resolvedImageWithDomain = new URL(
   Astro.site
 ).toString();
 
-const { title } = Astro.props;
+const { title, lang = "en" } = Astro.props;
 
 const makeTitle = title
-  ? title + " | " + "Astroship"
-  : "Astroship - Starter Template for Astro with Tailwind CSS";
+  ? `Hovirix | ${title}`
+  : "Hovirix";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -35,22 +36,22 @@ const makeTitle = title
     <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
     <SEO
       title={makeTitle}
-      description="Astroship is a starter website template for Astro built with TailwindCSS."
+      description="Hovirix - Developer portfolio and blog built with Astro and TailwindCSS."
       canonical={canonicalURL}
       twitter={{
-        creator: "@surjithctly",
-        site: "@web3templates",
+        creator: "@Hovirix",
+        site: "@Hovirix",
         card: "summary_large_image",
       }}
       openGraph={{
         basic: {
           url: canonicalURL,
           type: "website",
-          title: `Astroship - Starter Template for Astro`,
+          title: `Hovirix - Developer Portfolio`,
           image: resolvedImageWithDomain,
         },
         image: {
-          alt: "Astroship Homepage Screenshot",
+          alt: "Hovirix Portfolio",
         },
       }}
     />
