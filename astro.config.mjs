@@ -6,9 +6,16 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://astroship.web3templates.com",
+  site: "https://nemnix.site",
   integrations: [mdx(), sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],
   },
+  i18n: {
+    defaultLocale: "en",
+    locales: ["en", "fr"],
+    routing: {
+      prefixDefaultLocale: false
+    }
+  }
 });
