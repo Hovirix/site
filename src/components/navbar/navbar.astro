@@ -1,40 +1,30 @@
 ---
 import Container from "@/components/container.astro";
-import Link from "@/components/ui/link.astro";
-import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { Icon } from "astro-icon/components";
+import { languages, getLangFromUrl, useTranslations } from "@/utils/i18n";
+
+const currentLang = getLangFromUrl(Astro.url);
+const t = useTranslations(currentLang);
+
+// Build language prefix for URLs
+const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
 
 const menuitems = [
   {
-    title: "Features",
-    path: "#",
-    children: [
-      { title: "Action", path: "/" },
-      { title: "Another action", path: "#" },
-      { title: "Dropdown Submenu", path: "#" },
-      { title: "404 Page", path: "/404" },
-    ],
+    title: t("nav.about"),
+    path: `${langPrefix}/about`,
+    icon: "bx:bxs-user",
   },
   {
-    title: "Pricing",
-    path: "/pricing",
+    title: t("nav.blog"),
+    path: `${langPrefix}/blog`,
+    icon: "bx:bxs-book-open",
   },
   {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
-  {
-    title: "Contact",
-    path: "/contact",
-  },
-  {
-    title: "Pro Version",
-    badge: true,
-    path: "https://astroship-pro.web3templates.com/",
+    title: t("nav.contact"),
+    path: `${langPrefix}/contact`,
+    icon: "bx:bxs-envelope",
   },
 ];
 ---
@@ -42,58 +32,121 @@ const menuitems = [
 <Container>
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
     <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">Astro</span><span
-            class="text-slate-500">ship</span
-          >
-        </a>
+      <div class="flex w-full lg:w-auto items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <img src="/avatar.jpg" alt="Hovirix" class="inline-block size-10 rounded-full object-cover object-center ring-2 ring-white outline -outline-offset-1 outline-black/5" />
+          <a href={currentLang === 'en' ? '/' : `/${currentLang}`} class="text-lg group">
+            <span class="font-bold text-slate-900 tracking-tight text-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text hover:from-slate-700 hover:via-slate-600 hover:to-slate-500 transition-all duration-300">Hovirix</span>
+          </a>
+        </div>
         <div class="block lg:hidden">
           <MenuIcon class="w-4 h-4 text-gray-800" />
         </div>
       </div>
       <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
+        <ul class="flex flex-col lg:flex-row lg:gap-3 lg:items-center">
           {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
-
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
-                      {item.badge && (
-                        <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
-                          New
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                )}
-              </>
+            menuitems.map((item) => (
+              <li>
+                <a
+                  href={item.path}
+                  class="flex lg:px-3 py-2 items-center gap-2 text-gray-600 hover:text-gray-900">
+                  <Icon name={item.icon} class="w-5 h-5" />
+                  <span> {item.title}</span>
+                </a>
+              </li>
             ))
           }
         </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <Link href="#" style="muted" block size="md">Log in</Link>
-          <Link href="#" size="md" block>Sign up</Link>
+        <div class="lg:hidden flex items-center mt-3">
+          <div class="language-switcher-mobile">
+            <button class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-slate-50 rounded-lg transition">
+              <Icon name="bx:bx-world" class="w-5 h-5" />
+              <span class="font-medium">{languages[currentLang]}</span>
+              <Icon name="bx:bx-chevron-down" class="w-4 h-4" />
+            </button>
+            <div class="language-dropdown-mobile hidden">
+              <a href="/" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
+                <span class="text-2xl">🇬🇧</span>
+                <span class="font-medium text-gray-700">English</span>
+              </a>
+              <a href="/fr" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
+                <span class="text-2xl">🇫🇷</span>
+                <span class="font-medium text-gray-700">Français</span>
+              </a>
+            </div>
+          </div>
         </div>
       </MenuItems>
     </Astronav>
     <div>
       <div class="hidden lg:flex items-center gap-4">
-        <a href="#">Log in</a>
-        <Link href="#" size="md">Sign up</Link>
+        <div class="language-switcher relative">
+          <button class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-slate-50 rounded-lg transition">
+            <Icon name="bx:bx-world" class="w-5 h-5" />
+            <span class="font-medium">{languages[currentLang]}</span>
+            <Icon name="bx:bx-chevron-down" class="w-4 h-4" />
+          </button>
+          <div class="language-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 hidden py-2">
+            <a href="/" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
+              <span class="text-2xl">🇬🇧</span>
+              <span class="font-medium text-gray-700">English</span>
+            </a>
+            <a href="/fr" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
+              <span class="text-2xl">🇫🇷</span>
+              <span class="font-medium text-gray-700">Français</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </header>
 </Container>
+
+<script>
+  // Desktop dropdown
+  const langSwitcher = document.querySelector('.language-switcher');
+  const langButton = langSwitcher?.querySelector('button');
+  const langDropdown = langSwitcher?.querySelector('.language-dropdown');
+
+  langButton?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdown?.classList.toggle('hidden');
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!langSwitcher?.contains(e.target as Node)) {
+      langDropdown?.classList.add('hidden');
+    }
+  });
+
+  // Mobile dropdown
+  const langSwitcherMobile = document.querySelector('.language-switcher-mobile');
+  const langButtonMobile = langSwitcherMobile?.querySelector('button');
+  const langDropdownMobile = langSwitcherMobile?.querySelector('.language-dropdown-mobile');
+
+  langButtonMobile?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    langDropdownMobile?.classList.toggle('hidden');
+  });
+
+  // Close mobile dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!langSwitcherMobile?.contains(e.target as Node)) {
+      langDropdownMobile?.classList.add('hidden');
+    }
+  });
+</script>
+
+<style>
+  .language-dropdown {
+    z-index: 50;
+  }
+  
+  .language-dropdown-mobile {
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+    border-top: 1px solid rgb(226 232 240);
+  }
+</style>
