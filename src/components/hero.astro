@@ -1,11 +1,17 @@
 ---
-import Link from "@/components/ui/link.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
-import { getLangFromUrl, useTranslations } from "@/utils/i18n";
+import Link from "@/components/ui/link.astro";
 
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
-const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
+interface Props {
+	greeting: string;
+	description: string;
+	ctaBlog: string;
+	ctaWork: string;
+}
+
+const { greeting, description, ctaBlog, ctaWork } = Astro.props;
+const currentLocale = Astro.currentLocale || "en";
 ---
 
 <main
@@ -25,20 +31,20 @@ const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
     <h1
       class="text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight"
     >
-      {t("hero.greeting")}
+      {greeting}
     </h1>
 
     <p class="mt-4 max-w-xl text-lg text-slate-600">
-      {t("hero.description")}
+      {description}
     </p>
 
     <div class="mt-6 flex flex-col gap-3 sm:flex-row">
       <Link
-        href={`${langPrefix}/blog`}
+        href={getRelativeLocaleUrl(currentLocale, "blog")}
         class="flex items-center justify-center gap-2"
       >
         <Icon class="h-5 w-5 text-white" name="bx:bxs-book-open" />
-        <span>{t("hero.cta.blog")}</span>
+        <span>{ctaBlog}</span>
       </Link>
 
       <Link
@@ -50,7 +56,7 @@ const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
         class="flex items-center justify-center gap-2"
       >
         <Icon class="h-4 w-4 text-black" name="bx:bxl-github" />
-        <span>{t("hero.cta.work")}</span>
+        <span>{ctaWork}</span>
       </Link>
     </div>
   </div>

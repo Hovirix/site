@@ -1,32 +1,22 @@
 ---
-import Container from "@/components/container.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
-import { languages, getLangFromUrl, useTranslations } from "@/utils/i18n";
+import { Astronav, MenuIcon, MenuItems } from "astro-navbar";
+import Container from "@/components/container.astro";
 
-const currentLang = getLangFromUrl(Astro.url);
-const t = useTranslations(currentLang);
+interface Props {
+	menuItems: Array<{ title: string; path: string; icon: string }>;
+	languageLabel: string;
+}
 
-// Build language prefix for URLs
-const langPrefix = currentLang === 'en' ? '' : `/${currentLang}`;
+const { menuItems, languageLabel } = Astro.props;
+const currentLocale = Astro.currentLocale || "en";
 
-const menuitems = [
-  {
-    title: t("nav.about"),
-    path: `${langPrefix}/about`,
-    icon: "bx:bxs-user",
-  },
-  {
-    title: t("nav.blog"),
-    path: `${langPrefix}/blog`,
-    icon: "bx:bxs-book-open",
-  },
-  {
-    title: t("nav.contact"),
-    path: `${langPrefix}/contact`,
-    icon: "bx:bxs-envelope",
-  },
-];
+// Generate localized URLs for menu items
+const localizedMenuItems = menuItems.map((item) => ({
+	...item,
+	href: getRelativeLocaleUrl(currentLocale, item.path),
+}));
 ---
 
 <Container>
@@ -35,7 +25,7 @@ const menuitems = [
       <div class="flex w-full lg:w-auto items-center justify-between gap-3">
         <div class="flex items-center gap-3">
           <img src="/avatar.jpg" alt="Hovirix" class="inline-block size-10 rounded-full object-cover object-center ring-2 ring-white outline -outline-offset-1 outline-black/5" />
-          <a href={currentLang === 'en' ? '/' : `/${currentLang}`} class="text-lg group">
+          <a href={getRelativeLocaleUrl(currentLocale, "")} class="text-lg group">
             <span class="font-bold text-slate-900 tracking-tight text-xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 bg-clip-text hover:from-slate-700 hover:via-slate-600 hover:to-slate-500 transition-all duration-300">Hovirix</span>
           </a>
         </div>
@@ -46,10 +36,10 @@ const menuitems = [
       <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
         <ul class="flex flex-col lg:flex-row lg:gap-3 lg:items-center">
           {
-            menuitems.map((item) => (
+            localizedMenuItems.map((item) => (
               <li>
                 <a
-                  href={item.path}
+                  href={item.href}
                   class="flex lg:px-3 py-2 items-center gap-2 text-gray-600 hover:text-gray-900">
                   <Icon name={item.icon} class="w-5 h-5" />
                   <span> {item.title}</span>
@@ -62,15 +52,15 @@ const menuitems = [
           <div class="language-switcher-mobile">
             <button class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-slate-50 rounded-lg transition">
               <Icon name="bx:bx-world" class="w-5 h-5" />
-              <span class="font-medium">{languages[currentLang]}</span>
+              <span class="font-medium">{languageLabel}</span>
               <Icon name="bx:bx-chevron-down" class="w-4 h-4" />
             </button>
-            <div class="language-dropdown-mobile hidden">
-              <a href="/" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
+            <div class="language-dropdown-mobile hidden mt-2 py-2 border-t border-slate-200">
+              <a href={getRelativeLocaleUrl("en", "")} class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
                 <span class="text-2xl">🇬🇧</span>
                 <span class="font-medium text-gray-700">English</span>
               </a>
-              <a href="/fr" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
+              <a href={getRelativeLocaleUrl("fr", "")} class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 rounded-lg transition">
                 <span class="text-2xl">🇫🇷</span>
                 <span class="font-medium text-gray-700">Français</span>
               </a>
@@ -84,15 +74,15 @@ const menuitems = [
         <div class="language-switcher relative">
           <button class="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-slate-50 rounded-lg transition">
             <Icon name="bx:bx-world" class="w-5 h-5" />
-            <span class="font-medium">{languages[currentLang]}</span>
+            <span class="font-medium">{languageLabel}</span>
             <Icon name="bx:bx-chevron-down" class="w-4 h-4" />
           </button>
-          <div class="language-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 hidden py-2">
-            <a href="/" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
+          <div class="language-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-slate-200 hidden py-2 z-50">
+            <a href={getRelativeLocaleUrl("en", "")} class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
               <span class="text-2xl">🇬🇧</span>
               <span class="font-medium text-gray-700">English</span>
             </a>
-            <a href="/fr" class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
+            <a href={getRelativeLocaleUrl("fr", "")} class="flex items-center gap-3 px-4 py-2 hover:bg-slate-50 transition">
               <span class="text-2xl">🇫🇷</span>
               <span class="font-medium text-gray-700">Français</span>
             </a>
@@ -138,15 +128,3 @@ const menuitems = [
     }
   });
 </script>
-
-<style>
-  .language-dropdown {
-    z-index: 50;
-  }
-  
-  .language-dropdown-mobile {
-    margin-top: 0.5rem;
-    padding: 0.5rem 0;
-    border-top: 1px solid rgb(226 232 240);
-  }
-</style>

@@ -1,5 +1,4 @@
 ---
-import { SEO } from "astro-seo";
 import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
@@ -7,22 +6,22 @@ import "@fontsource-variable/bricolage-grotesque";
 import "../styles/global.css";
 
 export interface Props {
-  title: string;
-  lang?: string;
+	title: string;
+	lang?: string;
+	menuItems: Array<{ title: string; path: string; icon: string }>;
+	languageLabel: string;
+	copyrightText: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const {
+	title,
+	lang = "en",
+	menuItems,
+	languageLabel,
+	copyrightText,
+} = Astro.props;
 
-const resolvedImageWithDomain = new URL(
-  "/opengraph.jpg",
-  Astro.site
-).toString();
-
-const { title, lang = "en" } = Astro.props;
-
-const makeTitle = title
-  ? `Hovirix | ${title}`
-  : "Hovirix";
+const makeTitle = title ? `Hovirix | ${title}` : "Hovirix";
 ---
 
 <!doctype html>
@@ -32,40 +31,11 @@ const makeTitle = title
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-
-    <!-- <link rel="preload" as="image" href={src} alt="Hero" /> -->
-    <SEO
-      title={makeTitle}
-      description="Hovirix - Developer portfolio and blog built with Astro and TailwindCSS."
-      canonical={canonicalURL}
-      twitter={{
-        creator: "@Hovirix",
-        site: "@Hovirix",
-        card: "summary_large_image",
-      }}
-      openGraph={{
-        basic: {
-          url: canonicalURL,
-          type: "website",
-          title: `Hovirix - Developer Portfolio`,
-          image: resolvedImageWithDomain,
-        },
-        image: {
-          alt: "Hovirix Portfolio",
-        },
-      }}
-    />
+    <title>{makeTitle}</title>
   </head>
   <body>
-    <Navbar />
+    <Navbar menuItems={menuItems} languageLabel={languageLabel} />
     <slot />
-    <Footer />
-    <style is:global>
-      /* Improve Page speed */
-      /* https://css-tricks.com/almanac/properties/c/content-visibility/ */
-      img {
-        content-visibility: auto;
-      }
-    </style>
+    <Footer copyrightText={copyrightText} />
   </body>
 </html>
