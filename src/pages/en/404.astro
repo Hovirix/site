@@ -1,9 +1,19 @@
 ---
 import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
 import Layout from "@/layouts/Layout.astro";
 ---
 
-<Layout title="404 Not Found">
+<Layout 
+  title="404 Not Found"
+  menuItems={[
+    { title: "About", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="ENG"
+  copyrightText="All rights reserved."
+>
   <Container>
     <div class="min-h-[calc(100vh-16rem)] flex items-center justify-center">
       <div class="mt-16 text-center">

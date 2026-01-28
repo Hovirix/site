@@ -1,0 +1,25 @@
+---
+import Container from "@/components/container.astro";
+import Hero from "@/components/hero.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout 
+  title=""
+  menuItems={[
+    { title: "About", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="ENG"
+  copyrightText="All rights reserved."
+>
+  <Container>
+    <Hero 
+      greeting="Hi, I'm Hovirix 👋"
+      description="I'm a homelabber and Linux open-source enthusiast, curious about cybersecurity and driven by minimalism, efficiency, and performance."
+      ctaBlog="Read my Blog"
+      ctaWork="View My Work"
+    />
+  </Container>
+</Layout>

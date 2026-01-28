@@ -1,27 +1,37 @@
 ---
-import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
-import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
+import Layout from "@/layouts/Layout.astro";
 
 // Filter blog entries with 'draft: false' & date before current date
 const publishedBlogEntries = await getCollection("blog", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
+	return !data.draft && data.publishDate < new Date();
 });
 
 // Sort content entries by publication date
-publishedBlogEntries.sort(function (a, b) {
-  return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
-});
+publishedBlogEntries.sort(
+	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf(),
+);
 ---
 
-<Layout title="Blog">
+<Layout 
+  title="Blog" 
+  lang="fr"
+  menuItems={[
+    { title: "À propos", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="FRA"
+  copyrightText="Tous droits réservés."
+>
   <Container>
     <Sectionhead>
-      <Fragment slot="title">My Blog</Fragment>
+      <Fragment slot="title">Mon Blog</Fragment>
       <Fragment slot="desc">
-I write about homelabbing, Linux, and cybersecurity, sharing projects, experiments, and thoughts along the way.
+J'écris sur le homelab, Linux et la cybersécurité, en partageant des projets, des expériences et des réflexions.
       </Fragment>
     </Sectionhead>
     <main class="mt-16">
@@ -29,7 +39,7 @@ I write about homelabbing, Linux, and cybersecurity, sharing projects, experimen
         {
           publishedBlogEntries.map((blogPostEntry, index) => (
             <li>
-              <a href={`/blog/${blogPostEntry.slug}`}>
+              <a href={`/fr/blog/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
                   <Picture
                     src={blogPostEntry.data.image.src}
@@ -58,7 +68,7 @@ I write about homelabbing, Linux, and cybersecurity, sharing projects, experimen
                       <time
                         class="text-gray-400"
                         datetime={blogPostEntry.data.publishDate.toISOString()}>
-                        {blogPostEntry.data.publishDate.toDateString()}
+                        {blogPostEntry.data.publishDate.toLocaleDateString('fr-FR')}
                       </time>
                     </div>
                   </div>

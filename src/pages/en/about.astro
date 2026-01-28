@@ -1,10 +1,20 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import Container from "@/components/container.astro";
 import Sectionhead from "@/components/sectionhead.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
-<Layout title="About">
+<Layout 
+  title="About"
+  menuItems={[
+    { title: "About", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="ENG"
+  copyrightText="All rights reserved."
+>
   <Container>
     <Sectionhead>
       <Fragment slot="title">About Me</Fragment>
@@ -154,7 +164,7 @@ import Sectionhead from "@/components/sectionhead.astro";
                 View GitHub
               </a>
               <a
-                href="/contact"
+                href={getRelativeLocaleUrl("en", "contact")}
                 class="inline-flex items-center gap-2 rounded-lg border-2 border-slate-300 px-6 py-3 text-gray-800 transition hover:border-slate-400 hover:bg-white"
               >
                 Get in touch

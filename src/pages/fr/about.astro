@@ -1,0 +1,179 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout 
+  title="À propos" 
+  lang="fr"
+  menuItems={[
+    { title: "À propos", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="FRA"
+  copyrightText="Tous droits réservés."
+>
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">À propos de moi</Fragment>
+      <Fragment slot="desc">
+        Passionné de homelab et utilisateur Linux.
+      </Fragment>
+    </Sectionhead>
+
+    <div class="mx-auto mt-16 flex max-w-5xl flex-col gap-12">
+      <!-- Short intro -->
+      <div class="flex flex-col gap-4">
+        <h2 class="text-3xl font-bold text-gray-800">
+          Passionné par le homelab, DevOps et la cybersécurité.
+        </h2>
+
+        <p class="text-lg leading-relaxed text-slate-600">
+          Je maintiens un homelab au quotidien pour un petit nombre d'utilisateurs,
+          avec des services auto-hébergés comme Immich, Paperless-ngx et
+          Vaultwarden. Je suis un apprenant autodidacte qui aime mettre la main à la pâte avec
+          de nouveaux sujets liés à Linux, DevOps et la cybersécurité.
+        </p>
+
+        <p class="text-lg leading-relaxed text-slate-600">
+          Guidé par la passion, je finalise actuellement la configuration de mon homelab et
+          je commence à approfondir mes connaissances en cybersécurité. J'aime aussi aider
+          les autres et partager des ressources, principalement en écrivant des articles de blog pour
+          redonner les connaissances que la communauté a partagées avec moi.
+        </p>
+      </div>
+
+      <!-- Tech Stack Grid -->
+      <div class="flex flex-col gap-6">
+        <div class="text-center">
+          <h3 class="text-3xl font-bold text-gray-800">
+            Stack technique & outils
+          </h3>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Infrastructure -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
+                <span class="text-2xl">🏗️</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Infrastructure
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">NixOS</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Fedora CoreOS</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Ansible</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Terraform</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Nix</span>
+            </div>
+          </div>
+
+          <!-- Containers -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-purple-100">
+                <span class="text-2xl">📦</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Conteneurs & CI/CD
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Docker</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Podman</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">CI/CD</span>
+            </div>
+          </div>
+
+          <!-- Networking -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
+                <span class="text-2xl">🌐</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Réseau
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">OpenWrt</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Cloudflare</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Tailscale</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">AdGuard Home</span>
+            </div>
+          </div>
+
+          <!-- Security & Observability -->
+          <div class="rounded-xl border-2 border-slate-200 bg-white p-6 transition-colors hover:border-slate-300">
+            <div class="mb-4 flex items-center gap-3">
+              <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
+                <span class="text-2xl">🔒</span>
+              </div>
+              <h4 class="text-xl font-semibold text-gray-800">
+                Sécurité & Monitoring
+              </h4>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Authentik</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Authelia</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Security Onion</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Prometheus</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Grafana</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-sm font-medium text-slate-700">Loki</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Card -->
+      <div class="mb-16 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 p-8 md:p-12">
+        <div class="flex flex-col items-center gap-8 md:flex-row">
+          <div class="flex-shrink-0">
+            <img
+              src="/avatar.jpg"
+              alt="Hovirix"
+              class="h-32 w-32 rounded-full object-cover object-center shadow-lg ring-4 ring-white md:h-40 md:w-40"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="flex flex-1 flex-col gap-4 text-center md:text-left">
+            <div>
+              <h3 class="text-2xl font-bold text-gray-800">
+                Restons en contact
+              </h3>
+              <p class="mt-2 text-slate-600">
+                Intéressé par l'infrastructure, la sécurité ou les discussions sur le homelab ?
+                Si vous avez un sujet, une idée ou un outil à partager, n'hésitez pas
+                à me contacter.
+              </p>
+            </div>
+
+            <div class="flex justify-center gap-4 md:justify-start">
+              <a
+                href="https://github.com/Hovirix"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 rounded-lg bg-black px-6 py-3 text-white transition hover:bg-slate-900"
+              >
+                Voir GitHub
+              </a>
+              <a
+                href={getRelativeLocaleUrl("fr", "contact")}
+                class="inline-flex items-center gap-2 rounded-lg border-2 border-slate-300 px-6 py-3 text-gray-800 transition hover:border-slate-400 hover:bg-white"
+              >
+                Me contacter
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Layout>

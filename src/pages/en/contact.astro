@@ -1,16 +1,25 @@
 ---
-import Layout from "@/layouts/Layout.astro";
 import Container from "@/components/container.astro";
+import Layout from "@/layouts/Layout.astro";
 ---
 
-<Layout title="Contact">
+<Layout 
+  title="Contact"
+  menuItems={[
+    { title: "About", path: "about", icon: "bx:bxs-user" },
+    { title: "Blog", path: "blog", icon: "bx:bxs-book-open" },
+    { title: "Contact", path: "contact", icon: "bx:bxs-envelope" }
+  ]}
+  languageLabel="ENG"
+  copyrightText="All rights reserved."
+>
   <Container>
     <div class="flex flex-col items-center justify-center min-h-[80vh] py-16">
       <div class="mx-auto max-w-2xl text-center mb-16">
         <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">Get in Touch</h2>
         <p class="mt-4 text-lg text-slate-600">You can contact me for work opportunities, collaborations, or general questions.</p>
       </div>
-      <form action="#" method="POST" class="w-full max-w-xl">
+      <form action="https://formspree.io/f/mykwvkrl" method="POST" class="w-full max-w-xl">
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label for="first-name" class="block text-sm font-semibold text-gray-900">First name</label>
@@ -33,7 +42,7 @@ import Container from "@/components/container.astro";
           <div class="sm:col-span-2">
             <label for="email" class="block text-sm font-semibold text-gray-900">Email</label>
             <div class="mt-2.5">
-              <input id="email" type="email" name="email" autocomplete="email" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
+              <input id="email" type="email" name="email" autocomplete="email" required class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6" />
             </div>
           </div>
           <div class="sm:col-span-2">
@@ -45,7 +54,7 @@ import Container from "@/components/container.astro";
           <div class="sm:col-span-2">
             <label for="message" class="block text-sm font-semibold text-gray-900">Message</label>
             <div class="mt-2.5">
-              <textarea id="message" name="message" rows="4" class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"></textarea>
+              <textarea id="message" name="message" rows="4" required class="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-900 sm:text-sm sm:leading-6"></textarea>
             </div>
           </div>
         </div>
